@@ -1,1 +1,0 @@
-'Faster SQL Inserts
