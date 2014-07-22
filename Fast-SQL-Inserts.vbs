@@ -1,4 +1,5 @@
 SUB InsertRecords()
+'**************************************************************************************
 'Parse an array into SQL Insert statements to create multiple inserts instead of individual
 'intNumRows declares the number of rows inserted in a single Insert statement
 'Optimal Insert performance depends on the number of rows being inserted simultaneously, the number of columns, and the data types 
@@ -38,6 +39,5 @@ SUB InsertRecords()
 		Conn.Execute strInsertStatement
 	Loop
 	'wscript.echo "Total rows affected:  " & intNumRows + 1
-End Sub
-
-'********************************************************************************************************************************************
+'**************************************************************************************
+END SUB
