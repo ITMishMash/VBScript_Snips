@@ -51,12 +51,12 @@ FUNCTION GetDateTime(intOption, chDateSeparator, chTimeSeparator)
 			
 	intDayCode = DatePart("w", dtNow)
 	Select Case intDayCode
-		Case vbSunday			strDayOfWeek = "Sunday"
-		Case vbMonday			strDayOfWeek = "Monday"
+		Case vbSunday		strDayOfWeek = "Sunday"
+		Case vbMonday		strDayOfWeek = "Monday"
 		Case vbTuesday		strDayOfWeek = "Tuesday"
 		Case vbWednesday	strDayOfWeek = "Wednesday"
 		Case vbThursday		strDayOfWeek = "Thursday"
-		Case vbFriday			strDayOfWeek = "Friday"
+		Case vbFriday		strDayOfWeek = "Friday"
 		Case vbSaturday		strDayOfWeek = "Saturday"
 	End Select
 	
@@ -64,14 +64,14 @@ FUNCTION GetDateTime(intOption, chDateSeparator, chTimeSeparator)
 	Select Case intMonthCode
 		Case vbJanuary		strMonthOfYear = "January"
 		Case vbFebruary		strMonthOfYear = "February"
-		Case vbMarch			strMonthOfYear = "March"
-		Case vbApril				strMonthOfYear = "April"
-		Case vbMay				strMonthOfYear = "May"
-		Case vbJune				strMonthOfYear = "June"
-		Case vbJuly				strMonthOfYear = "July"
-		Case vbAugust			strMonthOfYear = "August"
+		Case vbMarch		strMonthOfYear = "March"
+		Case vbApril		strMonthOfYear = "April"
+		Case vbMay		strMonthOfYear = "May"
+		Case vbJune		strMonthOfYear = "June"
+		Case vbJuly		strMonthOfYear = "July"
+		Case vbAugust		strMonthOfYear = "August"
 		Case vbSeptember	strMonthOfYear = "September"
-		Case vbOctober			strMonthOfYear = "October"
+		Case vbOctober		strMonthOfYear = "October"
 		Case vbNovember		strMonthOfYear = "November"
 		Case vbDecember		strMonthOfYear = "December"
 	End Select
