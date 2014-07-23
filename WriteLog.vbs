@@ -4,7 +4,6 @@
 SUB WriteLogFile(strLogFilePath, strLogMessage)
 '**************************************************************************************
 'SAMPLE USAGE: WriteLogFile "C:my_logfile.log" "Log message"
-	Const LOG_FILE = "D:\OnBase\BPI\scripts\Log\BPI_OB_HTML_Export_logfile.log"
 	Const ForReading = 1
 	Const ForWriting = 2
 	Const ForAppending = 8
@@ -43,25 +42,28 @@ SUB WriteLogDB(strConnectionString, strLogTable, arrLogMessage, arrTableHeaders)
 	'WriteLogDB strMyConnectionString strMyLogTable arrMyLogMessage arrMyTableHeaders
 
 	Dim objConnection
-	Dim strValues, strHeaders, strQuery
+	Dim strLogValues, strHeaderValues, strQuery
 	Dim boolHeaders
 	Dim intColumns, i
 	
+	'Check to see if the table headers were passed in and declare a flag
 	If Not(arrTableHeaders = FALSE) Then
 		boolHeaders = TRUE
 	Else
 		boolHeaders = FALSE
 	End If
 	
+	'Store the number of columns as an int
 	intColumns = UBound(arrTableHeaders)
-	strValues = "("
+	'Start the Values insert statement
+	strLogValues = "("
 	
 	For i = 0 to intColumns
-		strValues = strValues & "'" &arrLogMessage(i) & "'"
+		strLogValues = strLogValues & "'" &arrLogMessage(i) & "'"
 		If i < intColumns Then
-			strValues = strValues & ','
+			strLogValues = strLogValues & ','
 		Else
-			strValues = strValues & ')'
+			strLogValues = strLogValues & ');'
 		End If
 	Next
 	
@@ -71,16 +73,16 @@ SUB WriteLogDB(strConnectionString, strLogTable, arrLogMessage, arrTableHeaders)
 		Dim strHeaderValues
 		strHeaderValues = "("
 		For i = 0 to intColumns
-			strHeaderValues = strHeaderValues & arrMyTableHeaders(i)
+			strHeaderValues = strHeaderValues & arrTableHeaders(i)
 			If i < intColumns Then
 				strHeaderValues = strHeaderValues & ','
 			Else
 				strHeaderValues = strHeaderValues & ')'
 			End If
 		Next
-		strQuery = "INSERT INTO " & strLogTable & " (Field1,Field2,Field3)  VALUES "
+		strQuery = "INSERT INTO " & strLogTable & " " & strHeaderValues & " VALUES " & strLogValues
 	Else
-		strQuery = "INSERT INTO " & strLogTable & " VALUES "
+		strQuery = "INSERT INTO " & strLogTable & " VALUES " & strLogValues
 	End If
 	
 	On error resume next
