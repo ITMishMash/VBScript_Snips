@@ -6,26 +6,26 @@ FUNCTION GetDateTime(intOption, chDateSeparator, chTimeSeparator)
 'SAMPLE: strTimeStamp = GetDateTime(1, FALSE, "?") returns verbose date string, separators are not used
 'SAMPLE: strTimeStamp = GetDateTime(2, "?", False) returns date and time stamp, dates are separated by '?'
 
-	Const vbSunday = 1
-	Const vbMonday = 2
-	Const vbTuesday = 3
-	Const vbWednesday = 4
-	Const vbThursday = 5
-	Const vbFriday = 6
-	Const vbSaturday = 7
+'	Const vbSunday = 1
+'	Const vbMonday = 2
+'	Const vbTuesday = 3
+'	Const vbWednesday = 4
+'	Const vbThursday = 5
+'	Const vbFriday = 6
+'	Const vbSaturday = 7
 
-	Const vbJanuary = 1
-	Const vbFebruary = 2
-	Const vbMarch = 3
-	Const vbApril = 4
-	Const vbMay = 5
-	Const vbJune = 6
-	Const vbJuly = 7
-	Const vbAugust = 3
-	Const vbSeptember = 4
-	Const vbOctober = 5
-	Const vbNovember = 6
-	Const vbDecember = 7
+'	Const vbJanuary = 1
+'	Const vbFebruary = 2
+'	Const vbMarch = 3
+'	Const vbApril = 4
+'	Const vbMay = 5
+'	Const vbJune = 6
+'	Const vbJuly = 7
+'	Const vbAugust = 3
+'	Const vbSeptember = 4
+'	Const vbOctober = 5
+'	Const vbNovember = 6
+'	Const vbDecember = 7
 
 	Dim dtNow
 	Dim strDate, strTime, strDayOfWeek, strMonthOfYear, strTimeStampString
