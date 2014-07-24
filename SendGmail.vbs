@@ -1,5 +1,5 @@
 'TODO: Clean this up and refactor to a SUB
-
+'NOTE: storing passwords in scripts is not a safe practice
 
 'Create the message
 reportMessage = msg1 & chr(13) & chr(10) & msg2 & chr(13) & chr(10)
