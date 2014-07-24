@@ -1,7 +1,7 @@
 FUNCTION CheckFolderForFiles(strFolderName)
 '**************************************************************************************
 'Returns int
-Checks a folder for files
+'Checks a folder for number of files and existance of folder
 'Returns the number of files or -1 if the folder does not exists
 'Sample Usage:
 'intMyNumFiles = CheckFolderForFiles "C:\TEMP"
