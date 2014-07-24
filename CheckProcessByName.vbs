@@ -4,7 +4,7 @@ FUNCTION CheckProcessByName(intInstances, strProcName)
   'Returns Boolean TRUE if the criteria is met
   '
   'SAMPLE USAGE:
-  'Dim boolMyProcess = CheckProcess "serversalive.exe" 2
+  'Dim boolMyProcess = CheckProcess 2 "serversalive.exe"
   'If boolMyProcess Then wscript.echo("All processes running.")
   
   Dim objService
