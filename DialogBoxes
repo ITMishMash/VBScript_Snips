@@ -1,0 +1,69 @@
+'Not quite VBScript. This is a WinWrap function set for creating dialog boxes
+'Also, not quite done
+
+Function DialogFunc(identifier$, action, suppvalue)
+	'This function executes while a user dialog is visible
+	'This function is associated with the CreateDialog function
+	Select Case action
+		Case 1		'DIALOG BOX INITIALIZATION
+		Case 2      'VALUE CHANGING OR BUTTON PRESSED
+			DialogFunc = DlgValue("intListIndex")	'This sets the value of the selected item from the list as the return value
+			'msgbox "Selected = " & selected
+	End Select
+End Function
+
+Function CreateDialog
+	'This function creates a dialog box with a list of values
+	'The user is prompted to select from the list
+	'The index value of the selected item is returned
+	
+	Dim X, Y, DX, DY, Title$																		'Hold standard offsets for dialog elements
+	Dim arrMaxLength() 																				'Hold the max length of each column
+	Dim arrX, arrY, arrDX, arrDY																	'Hold the relative values calcluated from the arrMaxLength
+	arrMaxLength = CalculateMaxColumnLength(arrRecordsReturned)		'Calculate the max length for each column
+	CalculateDialogOffsets(arrMaxLength)													'Calculate all dialog offsets for arrX, arrY, arrDX, arrDY
+	
+	X = ""		'This numeric value is the distance from the left edge of the screen to the left edge of the dialog box. It is measured in 1/8 ths of the average character width for the dialog's font. If this is omitted then the dialog will be centered.  
+	Y = ""		'This numeric value is the distance from the top edge of the screen to the top edge of the dialog box. It is measured in 1/12 ths of the average character width for the dialog's font. If this is omitted then the dialog will be centered.  
+	DX = ""		'This number value is the width. It is measured in 1/8 ths of the average character width for the dialog's font. 
+	DY = ""		'This number value is the height. It is measured in 1/12 ths of the character height for the dialog's font.  
+	Title$ = "Title"	'This string value is the title of the user dialog. If this is omitted then there is no title.
+	dialogfunc = "FileDlgFunction"   'This is the function name that implements the DialogFunc for this user dialog. If this is omitted then the UserDialog doesn't have a dialogfunc.  A dialog function executes while a user dialog is visible. 
+	'Syntax:  Dialog name [X, Y,] DX, DY[, Title$]  [, .dialogfunc]
+    Begin Dialog UserDialog 200,120
+        Text 10,10,180,15,"Please push the OK button"
+		ListBox  1, 9, 329, 149, arrList(), .intListIndex
+        OKButton 80,90,40,20
+		CancelButton  343, 20, 50, 14
+    End Dialog
+	
+    Dim dlg As UserDialog
+   	CreateDialog = Dialog(dlg) ' show dialog (wait for ok)
+End Function
+
+Function CalculateDialogOffsets(arrMaxLength)
+	
+End Function
+
+Function CalculateMaxColumnLength(arrRecordsReturned)
+	'arrRecordsReturns must be in the form Columns, Rows
+	Dim myCol, myRow
+	Dim arrMyMaxVals()
+	For myCol = 0 to UBound(arrRecordsReturned) - 1 						'Loop through each columns
+		For myRow = 0 To UBound(myCol, UBound(arrRecordsReturned, myCol) - 1 )  'Loop through each row in a column
+			Redim Preserve arrMyMaxVals(
+			arrRecordsReturned(myCol, myRow)
+		Next 
+	Next
+End Function
+
+Sub Main
+	arrRecordsReturned () 		'All of the records returned by the query
+	
+	Dim button
+	button = CreateDialog
+	If button = -1 then     'clicked ok
+		Select Case selectsqlinstance
+		End Select
+	End If
+End Sub
