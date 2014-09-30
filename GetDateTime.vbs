@@ -41,13 +41,13 @@ FUNCTION GetDateTime(intOption, chDateSeparator, chTimeSeparator)
 		chTimeSeparator = "."
 	End If
 
-	strDate = Right("0" & DatePart("m",dtNow), 2) & chDateSeparator _
-			& Right("0" & DatePart("d",dtNow), 2) & chDateSeparator _ 
-			& DatePart("yyyy",dtNow)
-
-	strTime = Right("0" & DatePart("h",dtNow), 2) & chTimeSeparator _
-			& Right("0" & DatePart("h",dtNow), 2) & chTimeSeparator _ 
-			& Right("0" & DatePart("s",dtNow), 2)
+	dateStamp = DatePart("yyyy",dtNow) & chDateSeparator _
+		& Right("0" & DatePart("m",dtNow), 2) & chDateSeparator _
+		&  Right("0" & DatePart("d",dtNow), 2)
+	
+	timeStamp = Right("0" & DatePart("h",dtNow), 2) & chTimeSeparator _ 
+		& Right("0" & DatePart("n",dtNow), 2) & chTimeSeparator _  
+		& Right("0" & DatePart("s",dtNow), 2) 
 			
 	intDayCode = DatePart("w", dtNow)
 	Select Case intDayCode
