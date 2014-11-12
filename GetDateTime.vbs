@@ -33,19 +33,19 @@ FUNCTION GetDateTime(intOption, chDateSeparator, chTimeSeparator)
 	
 	dtNow = Now()
 	
-	If Not(Not(chDateSeparator = FALSE)) Then
+	If chDateSeparator = FALSE Then
 		chDateSeparator = "-"
 	End If
 	
-	If Not(Not(chTimeSeparator = FALSE)) Then
+	If chTimeSeparator = FALSE Then
 		chTimeSeparator = "."
 	End If
 
-	dateStamp = DatePart("yyyy",dtNow) & chDateSeparator _
+	strDate = DatePart("yyyy",dtNow) & chDateSeparator _
 		& Right("0" & DatePart("m",dtNow), 2) & chDateSeparator _
 		&  Right("0" & DatePart("d",dtNow), 2)
 	
-	timeStamp = Right("0" & DatePart("h",dtNow), 2) & chTimeSeparator _ 
+	strTime = Right("0" & DatePart("h",dtNow), 2) & chTimeSeparator _ 
 		& Right("0" & DatePart("n",dtNow), 2) & chTimeSeparator _  
 		& Right("0" & DatePart("s",dtNow), 2) 
 			
