@@ -1,97 +1,87 @@
-'WriteLogFile will write a message to a log file given the path of the file and the message
-'WriteLogDB will write a message to a DB given the connection string and the message
-
-SUB WriteLogFile(strLogFilePath, strLogMessage)
+FUNCTION GetDateTime(intOption, chDateSeparator, chTimeSeparator)
 '**************************************************************************************
-'SAMPLE USAGE: WriteLogFile "C:my_logfile.log" "Log message"
-	Const ForReading = 1
-	Const ForWriting = 2
-	Const ForAppending = 8
+'Declare the type of return using an integer for intOption
+'The case statement at the end will build a date string based on the intOption
+'Currently only two options created
+'SAMPLE: strTimeStamp = GetDateTime(1, FALSE, "?") returns verbose date string, separators are not used
+'SAMPLE: strTimeStamp = GetDateTime(2, "?", False) returns date and time stamp, dates are separated by '?'
 
-	Dim objFS, objLogFile
+	Const vbSunday = 1
+	Const vbMonday = 2
+	Const vbTuesday = 3
+	Const vbWednesday = 4
+	Const vbThursday = 5
+	Const vbFriday = 6
+	Const vbSaturday = 7
 
-	Set objFS = CreateObject("Scripting.FileSystemObject")
-	Set objLogFile = objFS.OpenTextFile(LOG_FILE, ForAppending, True)
+	Const vbJanuary = 1
+	Const vbFebruary = 2
+	Const vbMarch = 3
+	Const vbApril = 4
+	Const vbMay = 5
+	Const vbJune = 6
+	Const vbJuly = 7
+	Const vbAugust = 3
+	Const vbSeptember = 4
+	Const vbOctober = 5
+	Const vbNovember = 6
+	Const vbDecember = 7
 
-	objLogFile.WriteLine(Now() & ": " & strLogMessage)
-	Set objLogFile = Nothing
-	Set objFS = Nothing
-'**************************************************************************************
-END SUB
-
-SUB WriteLogDB(strConnectionString, strLogTable, arrLogMessage, arrTableHeaders)
-'**************************************************************************************
-'arrTableHeaders is optional and can be bypassed by entering FALSE in its place
-
-'SAMPLE USAGE: 
-	'Const strServerName="myServerName"
-	'Const strDBuid="myUserName"
-	'Const strDBpw="myPW"
-	'Const strDBName="myDBName"
-	'Dim strMyConnectionString, strMyLogTable
-	'Dim arrMyTableHeaders, arrMyLogMessage
-	'arrMyTableHeaders = Array("Field1","Field2","Field3")
-	'ReDim arrMyLogMessage(UBound(arrTableHeaders))
-	'
-	'arrLogMessage(0) = "Field1 Message Values"
-	'arrLogMessage(1) = "Field2 Message Values"
-	'arrLogMessage(2) = "Field3 Message Values"
-	'' Alternatively arrLogMessage can be populated by using arrLogMessage = Array("Field1 Message Values","Field2 Message Values","Field3 Message Values")
-	'strMyConnectionString  "driver={SQL SERVER};server=" & strServerName & ";uid=" & strDBuid & ";pwd=" & strDBpw & ";database=" & strDBName
-	'strMyLogTable = “myLogTableName”
-	'WriteLogDB strMyConnectionString strMyLogTable arrMyLogMessage arrMyTableHeaders
-
-	Dim objConnection
-	Dim strLogValues, strHeaderValues, strQuery
-	Dim boolHeaders
-	Dim intColumns, i
+	Dim dtNow
+	Dim strDate, strTime, strDayOfWeek, strMonthOfYear, strTimeStampString
+	Dim intDayCode, intMonthCode
 	
-	'Check to see if the table headers were passed in and declare a flag
-	If Not(arrTableHeaders = FALSE) Then
-		boolHeaders = TRUE
-	Else
-		boolHeaders = FALSE
+	dtNow = Now()
+	
+	If chDateSeparator = FALSE Then
+		chDateSeparator = ""
 	End If
 	
-	'Store the number of columns as an int
-	intColumns = UBound(arrTableHeaders)
-	'Start the Values insert statement
-	strLogValues = "("
-	
-	For i = 0 to intColumns
-		strLogValues = strLogValues & "'" &arrLogMessage(i) & "'"
-		If i < intColumns Then
-			strLogValues = strLogValues & ','
-		Else
-			strLogValues = strLogValues & ');'
-		End If
-	Next
-	
-	If boolHeaders Then
-		'strQuery Sample: INSERT INTO myLogTableName (Field1,Field2,Field3) VALUES ('myField1Value','myField2Value','myField3Value');
-		'strQuery = "INSERT INTO " & strLogTable & " (Field1,Field2,Field3)  VALUES ('" & Now() & "','" & "('" & strLogMessage & & "','" "')"
-		Dim strHeaderValues
-		strHeaderValues = "("
-		For i = 0 to intColumns
-			strHeaderValues = strHeaderValues & arrTableHeaders(i)
-			If i < intColumns Then
-				strHeaderValues = strHeaderValues & ','
-			Else
-				strHeaderValues = strHeaderValues & ')'
-			End If
-		Next
-		strQuery = "INSERT INTO " & strLogTable & " " & strHeaderValues & " VALUES " & strLogValues
-	Else
-		strQuery = "INSERT INTO " & strLogTable & " VALUES " & strLogValues
+	If chTimeSeparator = FALSE Then
+		chTimeSeparator = ""
 	End If
+
+	strDate = DatePart("yyyy",dtNow) & chDateSeparator _
+		& Right("0" & DatePart("m",dtNow), 2) & chDateSeparator _
+		&  Right("0" & DatePart("d",dtNow), 2)
 	
-	On error resume next
-	Set objConnection = CreateObject("ADODB.Connection") 
-		objConnection.Open(strConnectionString) 
-		objConnection.Execute(strQuery) 
-		objConnection.Close
-	Set objConnection = Nothing
-	Erase arrLogMessage
-	On error goto 0
+	strTime = Right("0" & DatePart("h",dtNow), 2) & chTimeSeparator _ 
+		& Right("0" & DatePart("n",dtNow), 2) & chTimeSeparator _  
+		& Right("0" & DatePart("s",dtNow), 2) 
+			
+	intDayCode = DatePart("w", dtNow)
+	Select Case intDayCode
+		Case vbSunday		strDayOfWeek = "Sunday"
+		Case vbMonday		strDayOfWeek = "Monday"
+		Case vbTuesday		strDayOfWeek = "Tuesday"
+		Case vbWednesday	strDayOfWeek = "Wednesday"
+		Case vbThursday		strDayOfWeek = "Thursday"
+		Case vbFriday		strDayOfWeek = "Friday"
+		Case vbSaturday		strDayOfWeek = "Saturday"
+	End Select
+	
+	intMonthCode = DatePart("m", dtNow)
+	Select Case intMonthCode
+		Case vbJanuary		strMonthOfYear = "January"
+		Case vbFebruary		strMonthOfYear = "February"
+		Case vbMarch		strMonthOfYear = "March"
+		Case vbApril		strMonthOfYear = "April"
+		Case vbMay		strMonthOfYear = "May"
+		Case vbJune		strMonthOfYear = "June"
+		Case vbJuly		strMonthOfYear = "July"
+		Case vbAugust		strMonthOfYear = "August"
+		Case vbSeptember	strMonthOfYear = "September"
+		Case vbOctober		strMonthOfYear = "October"
+		Case vbNovember		strMonthOfYear = "November"
+		Case vbDecember		strMonthOfYear = "December"
+	End Select
+	
+	Select Case intOption
+		Case 1	strTimeStampString = strDayOfWeek & ", " & strMonthOfYear & " " & DatePart("d",dtNow) & ", " & DatePart("yyyy",dtNow)
+		Case 2 strTimeStampString = strDate & "_" & strTime
+	End Select
+	
+	GetDateTime = strTimeStampString
+			
 '**************************************************************************************
-END SUB
+END FUNCTION
